@@ -1,5 +1,6 @@
 package com.carolmedici.helpdesk.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +17,11 @@ public class TestController {
     @GetMapping("/public")
     public String publicEndpoint() {
         return "API is running!";
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminOnly() {
+        return "Only admin!";
     }
 }
