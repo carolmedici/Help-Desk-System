@@ -6,7 +6,7 @@ services:
     image: postgres:15
     container_name: helpdesk-db
     environment:
-      POSTGRES_DB: helpdesk
+      POSTGRES_DB: keycloak
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -21,9 +21,9 @@ services:
     environment:
       KC_DB: postgres
       KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak
       KC_DB_USERNAME: postgres
       KC_DB_PASSWORD: postgres
-      KC_DB_DATABASE: helpdesk
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
