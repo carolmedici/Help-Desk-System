@@ -30,4 +30,14 @@ public class TicketService {
     public Ticket save(Ticket ticket){
         return repository.save(ticket);
     }
+
+    public Ticket updateStatus(Long id, TicketStatus status){
+        Ticket ticket = findById(id);
+        ticket.setStatus(status);
+        return repository.save(ticket);
+    }
+
+    public List<Ticket> findAll(){
+        return repository.findAll();
+    }
 }

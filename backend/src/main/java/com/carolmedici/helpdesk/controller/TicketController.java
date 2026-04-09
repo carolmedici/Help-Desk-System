@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ticket")
+@RequestMapping("/api/tickets")
 public class TicketController {
 
     private final TicketService service;
@@ -44,11 +44,14 @@ public class TicketController {
 
     @PatchMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN')")
-    public  Ticket updateTicketStatus(@PathVariable Long id, @RequestParam String status){
-        Ticket ticket = service.findById(id);
-        ticket.setStatus(TicketStatus.valueOf(status));
+    public  Ticket updateTicketStatus(@PathVariable Long id, @RequestParam TicketStatus status){
+        return  service.updateStatus(id, status);
+    }
 
-        return  service.save(ticket);
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public TicketResponse getById(@PathVariable Long id) {
+        return TicketMapper.toResponse(service.findById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
