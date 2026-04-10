@@ -1,45 +1,46 @@
-import Keycloak from 'keycloak-js';
+import { Injectable } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
+import { Router } from '@angular/router';
 
+@Injectable({
+  providedIn: 'root' 
+})
 export class AuthService {
-  private keycloak!: any;
+  
+  constructor(
+    private keycloakService: KeycloakService,
+    private router: Router) {}
+  
+  getToken() {
+    return this.keycloakService.getKeycloakInstance().token;
+  }
 
-  async init(): Promise<boolean> {
-    this.keycloak = new (Keycloak as any)({
-      url: 'http://localhost:8080',
-      realm: 'helpdesk-realm',
-      clientId: 'frontend'
-    });
-
-    try {     
-      const authenticated: boolean = await this.keycloak.init({
-        onLoad: 'login-required',
-        checkLoginIframe: false
-      });
-      
-      return authenticated;
-    } catch (error) {
-      console.error('Authentication error:', error);
-      return false;
+  getUsername(): string {
+    const instance = this.keycloakService.getKeycloakInstance();
+    if (instance && instance.authenticated) {       
+        return instance.tokenParsed?.['preferred_username'] || '';
     }
-  }
-
-  getToken(): string | undefined {
-    return this.keycloak.token;
-  }
-
-  getUsername(): string | undefined {
-    return this.keycloak.tokenParsed?.preferred_username;
+    return '';
   }
 
   getRoles(): string[] {
-    return this.keycloak.tokenParsed?.realm_access?.roles || [];
+    return this.keycloakService.getUserRoles();
   }
 
-  isAdmin(): boolean {
+  isAdmin(): boolean {  
     return this.getRoles().includes('ADMIN');
   }
 
-  isUser(): boolean{
-    return this.getRoles().includes('USER')
+  isUser(): boolean {
+    return this.getRoles().includes('USER');    
+  }
+
+   hasRole(roles: string[]): boolean {
+    const userRoles = this.keycloakService.getUserRoles();
+    return roles.some(role => userRoles.includes(role));
+  }
+
+  logout() {
+    this.keycloakService.logout();
   }
 }
