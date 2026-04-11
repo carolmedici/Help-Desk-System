@@ -1,5 +1,6 @@
 package com.carolmedici.helpdesk.controller;
 
+import com.carolmedici.helpdesk.dto.DashboardStatsDTO;
 import com.carolmedici.helpdesk.dto.TicketRequest;
 import com.carolmedici.helpdesk.dto.TicketResponse;
 import com.carolmedici.helpdesk.entity.Ticket;
@@ -7,7 +8,9 @@ import com.carolmedici.helpdesk.enums.TicketStatus;
 import com.carolmedici.helpdesk.mapper.TicketMapper;
 import com.carolmedici.helpdesk.service.TicketService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +61,18 @@ public class TicketController {
     @GetMapping
     public List<TicketResponse> getAll(){
         return service.findAll().stream().map(TicketMapper::toResponse).toList();
+    }
+
+    @GetMapping("stats/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<DashboardStatsDTO> getAdminStats() {
+        return ResponseEntity.ok(service.getAdminStats());
+    }
+
+    @GetMapping("stats/my-stats")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<DashboardStatsDTO> getUserStats(Authentication authentication) {
+        String userId = authentication.getName();
+        return ResponseEntity.ok(service.getUserStats(userId));
     }
 }

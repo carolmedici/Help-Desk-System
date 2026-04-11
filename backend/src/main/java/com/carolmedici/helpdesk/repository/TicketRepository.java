@@ -1,6 +1,7 @@
 package com.carolmedici.helpdesk.repository;
 
 import com.carolmedici.helpdesk.entity.Ticket;
+import com.carolmedici.helpdesk.enums.TicketStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,10 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> findByUserId(String userId);
+
+    long countByStatus(TicketStatus status);
+
+    long countByUserId(String userId);
+
+    long countByUserIdAndStatus(String userId, TicketStatus status);
 }
