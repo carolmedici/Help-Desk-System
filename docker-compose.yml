@@ -17,6 +17,8 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:24.0
     container_name: keycloak
+    volumes:
+      - C:/Users/carol/react-2026/help-desk-system/themes/help-desk-system-theme:/opt/keycloak/themes/help-desk-system-theme
     command: start-dev
     environment:
       KC_DB: postgres
@@ -26,6 +28,8 @@ services:
       KC_DB_PASSWORD: postgres
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_SPI_THEME_CACHE_THEMES: false
+      KC_SPI_THEME_CACHE_TEMPLATES: false
     ports:
       - "8080:8080"
     depends_on:
