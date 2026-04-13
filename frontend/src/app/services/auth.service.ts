@@ -41,6 +41,6 @@ export class AuthService {
   }
 
   logout() {
-    this.keycloakService.logout();
+    this.keycloakService.logout(window.location.origin);
   }
 }
