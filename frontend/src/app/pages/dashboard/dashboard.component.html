@@ -51,13 +51,23 @@
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-      <h3 class="text-lg font-bold text-gray-800 mb-4">Volume Overview</h3>
-      <div class="h-64 bg-gray-50 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-200">
-        <div class="text-center">
-            <i class="pi pi-chart-bar text-4xl text-gray-300 mb-2"></i>
-            <p class="text-gray-400 italic text-sm">Chart visualization coming soon</p>
-        </div>
-      </div>
+  <h3 class="text-lg font-bold text-gray-800 mb-4">Volume Overview</h3>
+  
+  <div class="h-64 rounded-xl flex items-center justify-center">
+   <div class="relative flex items-center justify-center">
+  <p-chart type="doughnut" [data]="chartData" [options]="chartOptions" height="250px"></p-chart>
+  
+  <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none" style="padding-bottom: 30px;">
+    <span class="text-3xl font-extrabold text-green-600">{{ stats.resolvedTickets }} </span>
+    <span class="text-xs font-medium text-gray-500 uppercase">Resolved</span>
+  </div>
+</div>
+
+    <div *ngIf="isLoading" class="text-center animate-pulse">
+        <i class="pi pi-spin pi-spinner text-4xl text-teal-500 mb-2"></i>
+        <p class="text-gray-400 text-sm">Loading data...</p>
+    </div>
+</div>
     </div>
 
     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
