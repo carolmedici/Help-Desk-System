@@ -1,0 +1,41 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Support Tickets</h2>
+    <button *ngIf="!authService.isAdmin()" routerLink="/tickets/create" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+      + New Ticket
+    </button>
+  </div>
+
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-50 border-b">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+          <th class="px-6 py-4">Date</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr *ngFor="let t of tickets" class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{{t.id}}</td>
+          <td class="px-6 py-4 text-sm text-gray-500">{{t.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{t.title}}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span [ngClass]="{
+              'bg-yellow-100 text-yellow-800': t.status === 'OPEN',
+              'bg-blue-100 text-blue-800': t.status === 'IN_PROGRESS',
+              'bg-green-100 text-green-800': t.status === 'CLOSED'
+            }" class="px-2 py-1 text-xs font-semibold rounded-full">
+              {{t.status}}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <a [routerLink]="['/tickets', t.id]" class="text-blue-600 hover:text-blue-900">View Details</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

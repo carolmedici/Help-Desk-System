@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
     selector: '[app-menuitem]',
     standalone: true,
     host: {
-        'class': 'block w-full' // Isso faz o componente ocupar 100% da largura
+        'class': 'block w-full' 
     },
     imports: [CommonModule, RouterModule],
     template: `

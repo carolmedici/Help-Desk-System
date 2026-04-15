@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AppMenuitemComponent } from './app.menuitem.component';
 
-
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html',
@@ -19,8 +18,7 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
-            {
-                
+            {                
                 icon: 'pi pi-home',
                 items: [
                     {
@@ -32,34 +30,28 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Ticket',
-                icon: 'pi pi-th-large',
-                items: [               
-                    {
-                        label: 'Create Ticket',
-                        icon: 'pi pi-plus-circle',
-                        routerLink: ['/create-ticket'],
-                        roles: ['USER'],
-                    },
-                    {
-                        label: 'My Tickets',
-                        icon: 'pi pi-ticket',
-                        routerLink: ['/my-tickets'],
-                        roles: ['USER'],
-                    },
-                    {
-                        label: 'Tickets Opened',
-                        icon: 'pi pi-ticket',
-                        routerLink: ['/all-tickets'],
-                        roles: ['ADMIN'],
-                    },
-                    {
-                        label: 'Tickets Status',
-                        icon: 'pi pi-sync',
-                        routerLink: ['/status'],
-                        roles: ['ADMIN'],
-                    }  
-                ],
+            label: 'Support Tickets',
+            icon: 'pi pi-th-large',
+            items: [               
+                {
+                    label: 'Create Ticket',
+                    icon: 'pi pi-plus-circle',
+                    routerLink: ['/tickets/create'],
+                    roles: ['USER'],
+                },
+                {
+                    label: 'My Tickets',
+                    icon: 'pi pi-ticket',
+                    routerLink: ['/tickets/list'],
+                    roles: ['USER'],
+                },
+                {
+                    label: 'Manage Tickets',
+                    icon: 'pi pi-briefcase',
+                    routerLink: ['/tickets/list'],
+                    roles: ['ADMIN'],
+                }
+            ],
             }
         ];  
         this.filterMenu();
@@ -76,6 +68,5 @@ export class AppMenuComponent implements OnInit {
          
           return { ...category, items: filteredItems };
         }).filter(category => category.items.length > 0); 
-      }
-      
+    }      
 }

@@ -11,21 +11,24 @@ export interface DashboardStats {
 
 @Injectable({ providedIn: 'root' })
 export class TicketService {
-
   private api = 'http://localhost:8081/api/tickets';
 
   constructor(private http: HttpClient) {}
 
-  getMyTickets() {
-   return this.http.get(`${this.api}/user`);
+  createTicket(request: any): Observable<any> {
+    return this.http.post(`${this.api}/create-ticket`, request);
   }
 
-  getAllTickets() {
-    return this.http.get(`${this.api}`);
+  getMyTickets(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}/user`);
   }
 
-  updateStatus(id: number, status: string) {
-    return this.http.patch(`${this.api}/${id}/status?status=${status}`, {});
+  getAllTickets(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}`);
+  }
+
+  updateStatus( id: number, data: { status: string, solution: string, resolutionType: string }): Observable<any> {   
+    return this.http.patch(`${this.api}/${id}/status`, {}, { params: { status } });
   }
 
   getAdminDashboardStats(): Observable<DashboardStats> {
@@ -33,7 +36,10 @@ export class TicketService {
   }
 
   getUserDashboardStats(): Observable<DashboardStats> {
-    return this.http.get<DashboardStats>(`${this.api}/stats/my-stats`) 
+    return this.http.get<DashboardStats>(`${this.api}/stats/my-stats`);
   }
-    
+
+  getById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
 }
