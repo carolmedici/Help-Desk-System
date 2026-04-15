@@ -18,7 +18,8 @@ public class TicketMapper {
                 ticket.getId(),
                 ticket.getTitle(),
                 ticket.getDescription(),
-                ticket.getStatus().name()
+                ticket.getStatus().name(),
+                ticket.getCreatedAt()
         );
     }
 }

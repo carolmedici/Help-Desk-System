@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -27,5 +30,13 @@ public class Ticket {
     private TicketStatus status;
 
     private String userId;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    private String solution;
+    private String resolutionType;
+
+
 
 }

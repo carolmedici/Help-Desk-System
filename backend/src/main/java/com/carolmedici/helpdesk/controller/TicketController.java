@@ -3,6 +3,7 @@ package com.carolmedici.helpdesk.controller;
 import com.carolmedici.helpdesk.dto.DashboardStatsDTO;
 import com.carolmedici.helpdesk.dto.TicketRequest;
 import com.carolmedici.helpdesk.dto.TicketResponse;
+import com.carolmedici.helpdesk.dto.TicketUpdateDTO;
 import com.carolmedici.helpdesk.entity.Ticket;
 import com.carolmedici.helpdesk.enums.TicketStatus;
 import com.carolmedici.helpdesk.mapper.TicketMapper;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
@@ -47,12 +49,15 @@ public class TicketController {
 
     @PatchMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN')")
-    public  Ticket updateTicketStatus(@PathVariable Long id, @RequestParam TicketStatus status){
-        return  service.updateStatus(id, status);
+    public Ticket updateTicketStatus(
+            @PathVariable Long id,
+            @RequestBody TicketUpdateDTO data
+    ) {
+        return service.updateStatus(id, data.status(), data.solution(), data.resolutionType());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public TicketResponse getById(@PathVariable Long id) {
         return TicketMapper.toResponse(service.findById(id));
     }

@@ -32,9 +32,14 @@ public class TicketService {
         return repository.save(ticket);
     }
 
-    public Ticket updateStatus(Long id, TicketStatus status){
+    public Ticket updateStatus(Long id, TicketStatus status, String solution, String resolutionType) {
         Ticket ticket = findById(id);
         ticket.setStatus(status);
+
+        if (status == TicketStatus.CLOSED) {
+            ticket.setSolution(solution);
+            ticket.setResolutionType(resolutionType);
+        }
         return repository.save(ticket);
     }
 
