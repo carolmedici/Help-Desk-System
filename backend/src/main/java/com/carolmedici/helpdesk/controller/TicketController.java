@@ -48,7 +48,7 @@ public class TicketController {
             var tickets = service.getByUser(userId);
             return ResponseEntity.ok(tickets);
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
