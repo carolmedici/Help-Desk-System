@@ -15,7 +15,11 @@ import { RouterModule } from '@angular/router';
                 {{ item.label }}
             </div>
 
-            <a *ngIf="item.routerLink" [routerLink]="item.routerLink" routerLinkActive="active-route" class="flex items-center p-3 no-underline color-inherit transition-colors duration-200 hover:bg-teal-600 hover:text-white w-full block pl-4">                
+            <a *ngIf="item.routerLink" 
+            [routerLink]="item.routerLink" 
+            routerLinkActive="active-route" 
+            [routerLinkActiveOptions]="{ exact: item.routerLink[0] === '/' }" 
+            class="flex items-center p-3 no-underline color-inherit transition-colors duration-200 hover:bg-teal-600 hover:text-white w-full block pl-4">                
                 <i [ngClass]="item.icon" class="mr-3 text-lg"></i>
                 <span class="font-medium">{{ item.label }}</span>
             </a>
