@@ -1,7 +1,6 @@
 package com.carolmedici.helpdesk.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public record TicketResponse(
         Long id,

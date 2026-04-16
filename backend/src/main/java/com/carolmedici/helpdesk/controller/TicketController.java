@@ -42,9 +42,15 @@ public class TicketController {
 
     @GetMapping("/user")
     @PreAuthorize("hasRole('USER')")
-    public List<TicketResponse> myTickets(@AuthenticationPrincipal Jwt jwt){
-        String userId = jwt.getSubject();
-        return service.getByUser(userId).stream().map(TicketMapper::toResponse).toList();
+    public ResponseEntity<?> myTickets(@AuthenticationPrincipal Jwt jwt){
+        try {
+            String userId = jwt.getSubject();
+            var tickets = service.getByUser(userId);
+            return ResponseEntity.ok(tickets);
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @PatchMapping("/{id}/status")
