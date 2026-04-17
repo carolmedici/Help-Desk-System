@@ -3,7 +3,7 @@ export const environment = {
   apiUrl: 'https://help-desk-system-gc6t.onrender.com/api',
   keycloak: {
     url: 'https://lemur-14.cloud-iam.com/auth',
-    realm: 'helpdesk-realm',
+    realm: 'help-desk-system',
     clientId: 'frontend'
   }
 };
