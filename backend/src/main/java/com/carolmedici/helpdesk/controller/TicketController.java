@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
@@ -74,13 +73,13 @@ public class TicketController {
         return service.findAll().stream().map(TicketMapper::toResponse).toList();
     }
 
-    @GetMapping("stats/admin")
+    @GetMapping("/stats/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DashboardStatsDTO> getAdminStats() {
         return ResponseEntity.ok(service.getAdminStats());
     }
 
-    @GetMapping("stats/my-stats")
+    @GetMapping("/stats/my-stats")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<DashboardStatsDTO> getUserStats(Authentication authentication) {
         String userId = authentication.getName();
